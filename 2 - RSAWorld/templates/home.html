@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="./dist/style-home.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main/style-home.css') }}">
+    <link rel="icon" type="image/x-icon" href="/static/icon.png">
+    <title>Home</title>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript"
+      src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+  </head>
+  <body>
+    <div class="logo">
+      <a href="/">
+        <h1>RSA<span> World</span></h1>
+      </a>    
+    </div>
+
+    <p style = "color:white; font-size:1.1rem; text-align: center; font-family: 'Special Elite', cursive;">You can now sign and verify messages communicated with {Bob}  </p>
+
+    <div class="content">
+
+      <div class="flex">
+        <form action="" method="POST" id="RSA_input">
+          <div class="encrypt-device">
+            <label for="plaintext"><b>Verify {Bob} Signature</b></label>
+            <textarea type="text" placeholder="Big Mac Sauce" name="plaintext" id="plaintext" rows="9"></textarea>
+            <input class="action"  type="submit" name="encrypt" value="Encrypt" style = "font-size:25px"></input>
+          </div>
+        </form>
+          <form action="" method="POST" id="RSA_input">
+          <div class="decrypt-device">
+          <label for="ciphertext"><b>Sign a Message</b></label>
+          <textarea type="text" placeholder="Be Careful." name="ciphertext" id="ciphertext" rows="9"></textarea>
+          <input class="action"  type="submit" name="decrypt" value="Decrypt" style = "font-size:25px"></input>
+        </div>
+
+      </div>
+    </form>
+
+    </div>
+    <p style = "color:white; font-size:1.1rem; text-align: center; font-family: 'Special Elite', cursive;"> Make sure you understand any message you sign.</p>
+
+    {% if submitted %}
+    <script>
+    
+      </script>
+    <div class="output">
+      {% if enc_input and good_input  %}
+        <p> The original signed message in this case should be:<br><br>
+          {{enc_msg}}
+        </p>
+        <a href="/home"><button> Okay </button></a>
+
+        {% elif dec_input and good_input %}
+        <p> Here is your message after decryption: <br><br>
+         
+          {{dec_msg}}</p>
+        <a href="/home"><button> Okay </button></a>
+      {% else %}
+        <p >{{err_msg}}</p>
+        <a href="javascript:history.go(-1)"><button>Go back</button></a>
+      {% endif %}
+    </div>
+    {% endif %}
+  </body>
+</html>

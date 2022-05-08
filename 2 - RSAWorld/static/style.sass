@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Chakra+Petch:wght@300&family=Cinzel+Decorative&family=Indie+Flower&family=Merienda&family=Oooh+Baby&family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Press+Start+2P&family=Special+Elite&family=Tapestry&display=swap')
+$d_grey: #1D1D1D
+
+html
+   background-color: $d_grey
+   font-family: 'Carter One', cursive
+
+.logo
+   margin-top: 0%
+   display: flex
+   justify-content: center
+   color: white
+   font-size: 2.5rem
+   span
+      color: #f64b4b
+
+
+
+      
+.content
+   color: white
+   display: flex
+   justify-content: center
+   font-family: 'Special Elite', cursive
+   font-size: 1.2rem
+   p
+      font-weight: 600
+      font-size: 1.2rem
+      line-height: 3rem
+   span
+      color: #f64b4b
+      cursor: pointer
+      &:hover
+         font-weight: 800
+
+
+input[type=text]
+   width: 100%
+   padding: 15px
+   color: white
+   margin: 5px 0 22px 0
+   display: inline-block
+   border: none
+   background: #f1f1f114
+   border-radius: 10px
+   font-size: 1.1rem
+   font-family: 'Special Elite', cursive
+   border: #f1f1f100 solid 2px
+
+
+input[type=text]:focus
+   outline: none
+   color: white
+   border: white solid 2px
+   font-family: 'Special Elite', cursive
+
+
+::placeholder 
+   color: white
+   opacity: 0.5
+   font-family: 'Special Elite', cursive
+
+
+.action
+   background-color: #f64b4b
+   margin: auto
+   width: 14rem
+   text-align: center
+   border-radius: 20px
+   cursor: pointer
+   transition: all 0.25s ease-in-out 
+   margin: 0 auto
+   display: block
+   padding: 0.6rem
+   border: none
+   font-family: 'Special Elite', cursive
+   a
+      font-size: 1.3rem
+      color: $d_grey
+      font-weight: 600
+      padding: 0.5rem
+      display: block
+   &:hover
+      transform: scale(1.1)
+      transition: all 0.2s ease-in-out 
+   margin-bottom: 0.5%
+
+
+a
+   text-decoration: none
+   color: inherit
+   
+button 
+  all: unset
+  cursor: pointer
+
+
+
+.output
+   max-width: 80%
+   background-color: #424242f8
+   border-radius: 15px
+   position: fixed
+   font-size: 1.3rem
+   padding: 3rem
+   top: 50%
+   left: 50%
+   transform: translate(-50%, -50%)
+   font-family: 'Special Elite', cursive
+   p
+      color: white
+   button
+      background-color: white
+      color: black
+      border-radius: 15px
+      padding: 0.8rem

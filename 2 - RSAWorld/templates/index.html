@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="./dist/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main/style.css') }}">
+    <link rel="icon" type="image/x-icon" href="/static/icon.png">
+    <title>Home</title>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript"
+      src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+  </head>
+  <body>
+    <div class="logo">
+      <a href="/">
+        <h1>RSA<span> World</span></h1>
+      </a>    
+    </div>
+
+    <div class="content">
+      <form action="" method="POST" id="RSA_input">
+        <div class="container">
+          <h1><span>Sign Up</span></h1>
+          <p>You'll need your own private and public keys to be identified. 
+            <br>
+            Any fields left empty will be <span style = "color:yellow">intelligently auto-generated.</span></p>
+          <label for="p"><b>Name</b></label>
+          <input type="text" placeholder="Jerry, is that you?" name="name" id="name" required>
+
+          
+          <label for="p"><b>Prime (p)</b></label>
+          <input type="text" placeholder="Make it a big prime." name="p" id="p" >
+    
+          <label for="q"><b>Prime (q)</b></label>
+          <input type="text" placeholder="Make it as big as p." name="q" id="q" >
+      
+          <label for="e"><b>Public Exponent (e)</b></label>
+          <input type="text" placeholder="Shouldn't be too small." name="e" id="e" >
+          <p> By signing up you agree to take full responsiblity of keeping p and q secret.</p>
+        </div>
+        <input class="action"  type="submit" name="submit" value="Sign Up" style = "font-size:25px"></input>
+      </form>
+      
+    </div>
+    {% if submitted %}
+    <script>
+      var form = document.getElementById("RSA_input");
+      var elements = form.elements;
+      for (var i = 0, len = elements.length; i < len; ++i) {
+          elements[i].readOnly = true;
+      }
+      </script>
+    <div class="output">
+      {% if good_input %}
+        <p> Sign up successful.<br><br>
+          We first compute $$ n = p\times q = {{p}}\times{{q}} = {{n}} $$
+          <br>
+          Now the public key is $$(n  , e \:) = ({{n}}  , {{e}} \:)$$
+          <br>
+          We know $$ \phi(n) = (p-1)\times(q-1) = {{p-1}}\times{{q-1}} = {{phi_n}} $$
+          <br>
+          Since $e = {{e}}$ and $gcd(e,\phi(n)) = 1$ we compute the secret key as    
+          $$d = e^{-1} \: mod \: \phi(n) = {{e_inv}} \: mod \: {{phi_n}} = {{d}}$$ 
+          <br>
+          {{err_msg}}</p>
+        <a href="/home"><button> Continue </button></a>
+      {% else %}
+        <p >{{err_msg}}</p>
+        <a href="javascript:history.go(-1)"><button>Go back</button></a>
+      {% endif %}
+    </div>
+    {% endif %}
+  </body>
+</html>
