@@ -1,38 +1,77 @@
+from ipynb.fs.full.Library import GCD, ModInv, IsPrime, GenRandPrime, Encrypt, Decrypt, log, floor
+
 def sign_up(p, q, e):
-   #TODO: Implement RSA Key Generation
-   #* If any of the 3 fields is missing then it should autogenerate it correctly
-   #* Otherwise (and anyway), it should check if they are all set correctly. 
-   #* The returned err_msg string should be returned empty if all is good.
-   #* Otherwise, return an indicative message as to why the sign up couldn't be processed
-   #* The keys from this function should be made available to the window chat script.
-   #* The window chat script shouldn't go through unless it knows that sign up was successful first.
+   #! what condition should I generate the numbers on (Should the be small or large)?
+   K=1000 #TODO: what is the value of K?
+   if p == '':
+      p = str(GenRandPrime(K))
+   if q == '':
+      q = str(GenRandPrime(K))
+
+   err_msg = ''
+   if not p.isdigit() and err_msg == '':
+      err_msg = 'p must be a number'
+   if not q.isdigit() and err_msg == '':
+      err_msg = 'q must be a number'
+
    p = int(p)
    q = int(q)
-   e = int(e)
    n = p*q
-   phi_n = 22
-   d = 15
-   err_msg = ''
-   e_inv = 12
+   phi_n = (p - 1) * (q - 1)
+
+   if not IsPrime(p) and err_msg == '':
+      err_msg = 'p is not prime'
+   if not IsPrime(q) and err_msg == '':
+      err_msg = 'q is not prime'
+
+   if e == '':
+      e = str(GenRandPrime(phi_n))
+
+   if not e.isdigit() and err_msg == '':
+      err_msg = 'e must be a number'
+   e = int(e)
+   if e <= 1  and err_msg == '':
+      err_msg = 'e should be greater than 1'
+   if e >= phi_n and err_msg == '':
+      err_msg = 'e should be less than (p - 1) * (q - 1)'
+   if GCD(e, phi_n) != 1 and err_msg == '':
+      err_msg = 'e is not coprime with (p - 1) * (q - 1)'
+
+   #?That is isn't reqired but it is a good idea to check it.
+   #TODO:Should we leave it?
+   if p == q and err_msg == '':
+      err_msg = 'p and q are the same that is a bad idea'
+
+   d = ModInv(e, phi_n)
+   e_inv = d + n #?To me that is no logical?
    return p, q, e, e_inv, n, phi_n, d, err_msg
 
-   
+
 def encrypt(n, e, M):
-   #TODO: Implement RSA encryption (check GCD and inequality condition)
-   #* If encryption is possible return result in c along with an empty string
-   #* Otherwise, return a non-empty err_msg describing the problem
-   err_msg = 'Do it right!!!!'
-   C = n * e * M
-   C = "LKDVKLDVSMSJKD SJDFNCKMA DA SDJKNO QWIDMOPWASDNM OKSCMD"
+   err_msg=''
+   if M == '':
+      err_msg = 'Empty message'
+   if not isinstance(M, str):
+      err_msg = 'M must be a string'
+   
+   TrancationLen= floor(log(n ,256))
+   M = list(M)
+   M = [''.join(M[i:i+TrancationLen]) for i in range(0, len(M), TrancationLen)]
+   C = [Encrypt(m, n, e) for m in M]
+   C = ''.join(C)
    return C, err_msg
 
 
 def decrypt(n, d, C):
-   #TODO: Implement RSA encryption (check GCD and inequality condition)
-   #* If encryption is possible return result in c along with an empty string
-   #* Otherwise, return a non-empty err_msg describing the problem
    err_msg = ''
-   M = n * d * C
-   M = """Mohamed M. Atalla was an Egyptian-American engineer, physical chemist, cryptographer, inventor and entrepreneur. He was a semiconductor pioneer who made important contributions to modern electronics. He is best known for inventing the MOSFET (metal–oxide–semiconductor field-effect transistor, or MOS transistor) in 1959 (along with his colleague Dawon Kahng), which along with Atalla's earlier surface passivation and thermal oxidation processes, revolutionized the electronics industry. He is also known as the founder of the data security company Atalla Corporation (now Utimaco Atalla), founded in 1972. He received the Stuart Ballantine Medal (now the Benjamin Franklin Medal in physics) and was inducted into the National Inventors Hall of Fame for his important contributions to semiconductor technology as well as data security.
-       """
+   if C == '':
+      err_msg = 'Empty message'
+   if not isinstance(C, str):
+      err_msg = 'C must be a string'
+   
+   TrancationLen= log(n ,256)
+   C = list(C)
+   C = [''.join(C[i:i+TrancationLen]) for i in range(0, len(C), TrancationLen)]
+   M = [Decrypt(c, n, d) for c in C]
+   M = ''.join(M)
    return M, err_msg
