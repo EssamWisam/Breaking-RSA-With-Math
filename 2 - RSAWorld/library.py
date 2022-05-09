@@ -3,9 +3,15 @@ from ipynb.fs.full.Library import GCD, ModInv, IsPrime, GenRandPrime, Encrypt, D
 def sign_up(p, q, e):
    BITSNUM=512
    if p == '':
-      p = str(GenRandPrime(BITSNUM))
+      if q == '':
+         p = str(GenRandPrime(BITSNUM))
+      else:
+         p = str(GenRandPrime(int(log(int(q), 2)+1)))
    if q == '':
-      q = str(GenRandPrime(BITSNUM))
+      if p == '':
+         q = str(GenRandPrime(BITSNUM))
+      else:
+         q = str(GenRandPrime(int(log(int(p), 2)+1)))
 
    err_msg = ''
    if not p.isdigit() and err_msg == '':
