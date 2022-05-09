@@ -1,12 +1,11 @@
 from ipynb.fs.full.Library import GCD, ModInv, IsPrime, GenRandPrime, Encrypt, Decrypt, log, floor
 
 def sign_up(p, q, e):
-   #! what condition should I generate the numbers on (Should the be small or large)?
-   K=1000 #TODO: what is the value of K?
+   BITSNUM=512
    if p == '':
-      p = str(GenRandPrime(K))
+      p = str(GenRandPrime(BITSNUM))
    if q == '':
-      q = str(GenRandPrime(K))
+      q = str(GenRandPrime(BITSNUM))
 
    err_msg = ''
    if not p.isdigit() and err_msg == '':
@@ -23,9 +22,13 @@ def sign_up(p, q, e):
       err_msg = 'p is not prime'
    if not IsPrime(q) and err_msg == '':
       err_msg = 'q is not prime'
-
+   if p == 2 and err_msg == '':
+      err_msg = 'p must be greater than 2'
+   if q == 2 and err_msg == '':
+      err_msg = 'q must be greater than 2'
+      
    if e == '':
-      e = str(GenRandPrime(phi_n))
+      e = str(GenRandPrime(int(log(phi_n,2))))
 
    if not e.isdigit() and err_msg == '':
       err_msg = 'e must be a number'
@@ -43,7 +46,7 @@ def sign_up(p, q, e):
       err_msg = 'p and q are the same that is a bad idea'
 
    d = ModInv(e, phi_n)
-   e_inv = d + n #?To me that is no logical?
+   e_inv = d + n
    return p, q, e, e_inv, n, phi_n, d, err_msg
 
 
@@ -69,7 +72,7 @@ def decrypt(n, d, C):
    if not isinstance(C, str):
       err_msg = 'C must be a string'
    
-   TrancationLen= log(n ,256)
+   TrancationLen= floor(log(n ,256))
    C = list(C)
    C = [''.join(C[i:i+TrancationLen]) for i in range(0, len(C), TrancationLen)]
    M = [Decrypt(c, n, d) for c in C]
