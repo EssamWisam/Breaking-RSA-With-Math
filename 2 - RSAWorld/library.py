@@ -66,9 +66,9 @@ def sign_up(p, q, e):
    if e <= 1  and err_msg == '':
       err_msg = 'e should be greater than 1'
    if e >= phi_n and err_msg == '':
-      err_msg = 'e should be less than (p - 1) * (q - 1)'
+      err_msg = 'e should be less than φ(n)'
    if GCD(e, phi_n) != 1 and err_msg == '':
-      err_msg = 'e is not coprime with (p - 1) * (q - 1)'
+      err_msg = 'e is not coprime with φ(n)'
 
    #?That is isn't reqired but it is a good idea to check it.
    #TODO:Should we leave it?
@@ -87,9 +87,9 @@ def encrypt(n, e, M):
    if not isinstance(M, str):
       err_msg = 'M must be a string'
    
-   TrancationLen= floor(log(n ,256))
+   TruncationLen= floor(log(n ,256))
    M = list(M)
-   M = [''.join(M[i:i+TrancationLen]) for i in range(0, len(M), TrancationLen)]
+   M = [''.join(M[i:i+TruncationLen]) for i in range(0, len(M), TruncationLen)]
    C = [Encrypt(m, n, e) for m in M]
    C = ''.join(C)
    return C, err_msg
@@ -102,9 +102,9 @@ def decrypt(n, d, C):
    if not isinstance(C, str):
       err_msg = 'C must be a string'
    
-   TrancationLen= floor(log(n ,256))
+   TruncationLen= floor(log(n ,256))
    C = list(C)
-   C = [''.join(C[i:i+TrancationLen]) for i in range(0, len(C), TrancationLen)]
+   C = [''.join(C[i:i+TruncationLen]) for i in range(0, len(C), TruncationLen)]
    M = [Decrypt(c, n, d) for c in C]
    M = ''.join(M)
    return M, err_msg

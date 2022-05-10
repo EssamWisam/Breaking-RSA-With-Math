@@ -4,12 +4,13 @@ app = Flask(__name__)
 
 PU = (-1, -1)
 PR = -1
-
+name = ''
 
 @app.route('/', methods=['POST', 'GET'])
 def sign_up_page():
     global PU
     global PR
+    global name
     if request.method == 'POST':
         name = request.form["name"]
         p = request.form["p"]
@@ -21,6 +22,7 @@ def sign_up_page():
             PU = (e, n)
             PR = d
             return render_template('index.html', good_input=True, err_msg=err_msg, submitted=True, p=p, q=q, e=e, n=n, phi_n=phi_n, d=d, e_inv=e_inv)
+
         else:
             return render_template('index.html', good_input=False, err_msg=err_msg, submitted=True)
 
@@ -46,7 +48,7 @@ def home_page():
                return render_template('home.html', good_input=True, err_msg=err_msg, enc_input=True, dec_input=False, submitted=True, enc_msg = enc_msg, dec_msg = dec_msg)
             else:
                 return render_template('home.html', good_input=False, err_msg=err_msg, enc_input=True, dec_input=False, submitted=True)
-        else:
+        elif "decrypt" in request.form:
             C = request.form["ciphertext"]
             dec_msg, err_msg = decrypt(PU[1], PR, C)
 
@@ -54,10 +56,12 @@ def home_page():
                 return render_template('home.html', good_input=True, dec_input=True, enc_input=False, err_msg=err_msg, submitted=True, enc_msg = enc_msg, dec_msg = dec_msg)
             else:
                 return render_template('home.html', good_input=False, dec_input=True, enc_input=False, err_msg=err_msg, submitted=True)
+        else:                                                       # CCA Attack
+                return render_template('home.html', hacked=True)
 
     elif request.method == 'GET':
         if PR != -1:
-            return render_template('home.html')
+            return render_template('home.html', n=PU[1], e=PU[0])
         else:
             return redirect("/", code=302)
 

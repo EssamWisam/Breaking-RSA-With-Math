@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta id="my-data" n="{{n}}" e="{{e}}">
     <link rel="stylesheet" href="./dist/style-home.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='main/style-home.css') }}">
     <link rel="icon" type="image/x-icon" href="/static/icon.png">
@@ -12,6 +13,82 @@
     <script type="text/javascript"
       src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
+
+<script>
+
+var cipher_text = "89324723498298347982748971298371289479823897234987234892389";
+var n = 0;
+var e = 0;
+
+function set_cipher_text(){
+      const elem = document.getElementById('cca-ciphertext');
+      elem.innerHTML=cipher_text;
+
+    }
+
+function show(){
+      set_cipher_text();
+      const elem = document.getElementById('darth');
+      const audio = document.getElementById("audio");  
+      elem.style.display= "block";
+      audio.volume = 0.0;
+      audio.play();
+    }
+
+function hide(){
+    const audio = document.getElementById("audio");  
+      const elem = document.getElementById('darth');
+      elem.style.display= "none";
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
+    function show_hack(){
+      hide();
+      const elem = document.getElementById('hacked');
+      const audio = document.getElementById("audio1");  
+      elem.style.display= "block";
+      audio.volume = 0.0;
+      audio.play();
+    }
+
+    function hide_hack(){
+      const elem = document.getElementById('hacked');
+      elem.style.display= "none";
+      audio.pause();
+      audio.currentTime = 0
+    }
+
+    function CCA(){
+      hide();
+      // Logic.
+      // Update Inner HTML.
+      show_hack();
+
+    }
+
+
+  window.onload = function () {
+  var key = document.getElementById('my-data');
+  n = key.getAttribute('n')
+  e = key.getAttribute('e')
+  set_cipher_text();
+
+  document.addEventListener("keypress", (event)=> {
+      if (event.keyCode === 49) { 
+        event.preventDefault();
+        show();
+      }
+    });
+
+
+   
+  }
+  
+  </script>
+
+
+
   </head>
   <body>
     <div class="logo">
@@ -46,9 +123,7 @@
     <p style = "color:white; font-size:1.1rem; text-align: center; font-family: 'Special Elite', cursive;"> Make sure you understand any message you sign.</p>
 
     {% if submitted %}
-    <script>
-    
-      </script>
+
     <div class="output">
       {% if enc_input and good_input  %}
         <p> The original signed message in this case should be:<br><br>
@@ -68,4 +143,85 @@
     </div>
     {% endif %}
   </body>
+
+
+  <div id="darth" class="output darth" style ="display: none;"  >
+    <audio controls  id="audio" style ="display: none;">
+      <source src="../static/audio.mp3" type="audio/mpeg">
+    </audio>
+  <img src="../static/Darth.png" style ="display: block; margin: auto;" width="150" alt="">
+    
+      <p style ="text-align: justify;"> Hi {{name}}, I'm Darth, I met you yesterday at the car showroom. Hope you remember me.
+          In case you are still interested in the offer we talked about then I will need you
+          to sign the following for me as soon as possible. I really want you to be who gets
+          it but if wait any longer my boss will have it sold to someone else.
+          <br>
+          <br>
+
+          <span id="cca-ciphertext">
+          1525	2335	928	483	345
+          1478	681	871	704	1007
+          1585	1180	1300	588	437
+          1147	1776	2283	319	283          
+          307	1603	703	750	1025
+          1525	2335	928	483	345
+          1478	681	871	704	1007
+          1585	1180	1300	588	437
+          1147	1776	2283	319	283          
+          307	1603	703	750	1025
+        </span>
+
+          <br>
+          <br>
+
+         By clicking on <span style="color: yellow">yes</span> you agree to provide Darth with your electronic signature on the document shown.
+        
+        <br><br>
+      </p>
+      <div class="button-div">
+      <a >
+          <button onClick="CCA();" name="CCA" value="Yes">Yes</button>
+      </a>
+
+      <a ><button onClick="hide();"> No. </button></a>
+    </div>
+  </div>
+
+
+  <div id="hacked" class="output darth" style ="display: none;"  >
+    <audio controls  id="audio1" style ="display: none;">
+      <source src="../static/audio1.mp3" type="audio/mpeg">
+    </audio>
+    
+    <p> <span style="color: yellow; font-size:1.9rem; margin:auto; display:table;">You have been compromised. </span> <br>
+      I was interested in knowing the message behind your ciphertext $$C = 8923478932 9873$$
+      <br>
+      So I first computed<br> $$2^{e}\:mod\:n = 2^{{e}}\:mod\:{{n}} =  2342 $$
+      <br>
+      and then I took as a chosen ciphertext <br>
+       $$ C' = C \times (2^{e} \:mod\:n) = 8923478932 9873\times 234235  =  8927342$$
+      <br>
+      I asked you to sign this for me, which gives 
+      <br>   
+      $$C'^{d} \: mod \: n = (C \times 2^{e} )^{d} \: mod \: n =  9832498774239$$ 
+      <br>
+      then because as well $gcd(2, n) = 1$, we have
+      <br>
+      $$ M =  2^{-1} \times Y \: mod \: n = 123124 \times 2342312 \: mod \: {{n}} = 1221312$$
+      <br>
+      {{err_msg}}</p>
+      <div class="button-div">
+      <a href="/home " ">
+        <form action="" method="post">
+          <button onClick="hide_hack();" >Okay.</button>
+        </form>      
+      </a>
+
+    </div>
+  </div>
+
+</body>
+
+
+
 </html>
