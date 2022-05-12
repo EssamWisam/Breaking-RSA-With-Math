@@ -3,36 +3,38 @@ from ipynb.fs.full.Library import GCD, ModInv, IsPrime, GenRandPrime, Encrypt, D
 def sign_up(p, q, e):
    BITSNUM=512
    if p == '':
-      if not (e=='' and int(e)%2 !=0):
+      if e=='':
          if q == '':
             p = str(GenRandPrime(BITSNUM))
          else:
             p = str(GenRandPrime(int(log(int(q), 2)+1)))
       else:
-         if q == '':
-            p = str(GenRandPrime(BITSNUM))
-            while GCD(int(p)-1, int(e)) != 1:
+         if int(e)%2 !=0:
+            if q == '':
                p = str(GenRandPrime(BITSNUM))
-         else:
-            p = str(GenRandPrime(int(log(int(q), 2)+1)))
-            while GCD(int(p)-1, int(e)) != 1:
+               while GCD(int(p)-1, int(e)) != 1:
+                  p = str(GenRandPrime(BITSNUM))
+            else:
                p = str(GenRandPrime(int(log(int(q), 2)+1)))
+               while GCD(int(p)-1, int(e)) != 1:
+                  p = str(GenRandPrime(int(log(int(q), 2)+1)))
 
    if q == '':
-      if not(e=='' and int(e)%2 !=0):
+      if e=='':
          if p == '':
             q = str(GenRandPrime(BITSNUM))
          else:
             q = str(GenRandPrime(int(log(int(p), 2)+1)))
       else:
-         if p == '':
-            q = str(GenRandPrime(BITSNUM))
-            while GCD(int(q)-1, int(e)) != 1:
+         if int(e)%2 !=0:
+            if p == '':
                q = str(GenRandPrime(BITSNUM))
-         else:
-            q = str(GenRandPrime(int(log(int(p), 2)+1)))
-            while GCD(int(q)-1, int(e)) != 1:
+               while GCD(int(q)-1, int(e)) != 1:
+                  q = str(GenRandPrime(BITSNUM))
+            else:
                q = str(GenRandPrime(int(log(int(p), 2)+1)))
+               while GCD(int(q)-1, int(e)) != 1:
+                  q = str(GenRandPrime(int(log(int(p), 2)+1)))
 
 
    err_msg = ''
