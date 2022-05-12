@@ -38,6 +38,7 @@ def sign_up_page():
 def home_page():
     global PU
     global PR
+    global name
     if request.method == 'POST':
         enc_msg, dec_msg = -1, -1
         
@@ -61,7 +62,7 @@ def home_page():
 
     elif request.method == 'GET':
         if PR != -1:
-            return render_template('home.html', n=PU[1], e=PU[0])
+            return render_template('home.html', n=PU[1], e=PU[0], d=PR, name=name)
         else:
             return redirect("/", code=302)
 

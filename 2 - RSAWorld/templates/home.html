@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta id="my-data" n="{{n}}" e="{{e}}">
+    <meta id="my-data" n="{{n}}" e="{{e}}" d="{{d}}">
     <link rel="stylesheet" href="./dist/style-home.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='main/style-home.css') }}">
     <link rel="icon" type="image/x-icon" href="/static/icon.png">
@@ -14,80 +14,7 @@
       src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
 
-<script>
-
-var cipher_text = "89324723498298347982748971298371289479823897234987234892389";
-var n = 0;
-var e = 0;
-
-function set_cipher_text(){
-      const elem = document.getElementById('cca-ciphertext');
-      elem.innerHTML=cipher_text;
-
-    }
-
-function show(){
-      set_cipher_text();
-      const elem = document.getElementById('darth');
-      const audio = document.getElementById("audio");  
-      elem.style.display= "block";
-      audio.volume = 0.0;
-      audio.play();
-    }
-
-function hide(){
-    const audio = document.getElementById("audio");  
-      const elem = document.getElementById('darth');
-      elem.style.display= "none";
-      audio.pause();
-      audio.currentTime = 0;
-    }
-
-    function show_hack(){
-      hide();
-      const elem = document.getElementById('hacked');
-      const audio = document.getElementById("audio1");  
-      elem.style.display= "block";
-      audio.volume = 0.0;
-      audio.play();
-    }
-
-    function hide_hack(){
-      const elem = document.getElementById('hacked');
-      elem.style.display= "none";
-      audio.pause();
-      audio.currentTime = 0
-    }
-
-    function CCA(){
-      hide();
-      // Logic.
-      // Update Inner HTML.
-      show_hack();
-
-    }
-
-
-  window.onload = function () {
-  var key = document.getElementById('my-data');
-  n = key.getAttribute('n')
-  e = key.getAttribute('e')
-  set_cipher_text();
-
-  document.addEventListener("keypress", (event)=> {
-      if (event.keyCode === 49) { 
-        event.preventDefault();
-        show();
-      }
-    });
-
-
-   
-  }
-  
-  </script>
-
-
+<script src="../static/CCA.js"></script>
 
   </head>
   <body>
@@ -97,14 +24,14 @@ function hide(){
       </a>    
     </div>
 
-    <p style = "color:white; font-size:1.1rem; text-align: center; font-family: 'Special Elite', cursive;">You can now sign and verify messages communicated with {Bob}  </p>
+    <p style = "color:white; font-size:1.1rem; text-align: center; font-family: 'Special Elite', cursive;">You can now sign and verify messages associated with your public key  </p>
 
     <div class="content">
 
       <div class="flex">
         <form action="" method="POST" id="RSA_input">
           <div class="encrypt-device">
-            <label for="plaintext"><b>Verify {Bob} Signature</b></label>
+            <label for="plaintext"><b>Verify Signature</b></label>
             <textarea type="text" placeholder="Big Mac Sauce" name="plaintext" id="plaintext" rows="9"></textarea>
             <input class="action"  type="submit" name="encrypt" value="Encrypt" style = "font-size:25px"></input>
           </div>
@@ -157,7 +84,8 @@ function hide(){
           it but if wait any longer my boss will have it sold to someone else.
           <br>
           <br>
-
+          Document:
+          <br>
           <span id="cca-ciphertext">
           1525	2335	928	483	345
           1478	681	871	704	1007
@@ -193,7 +121,8 @@ function hide(){
       <source src="../static/audio1.mp3" type="audio/mpeg">
     </audio>
     
-    <p> <span style="color: yellow; font-size:1.9rem; margin:auto; display:table;">You have been compromised. </span> <br>
+    <p id="hack-content">
+      <span style="color: yellow; font-size:1.9rem; margin:auto; display:table;">You have been compromised. </span> <br>
       I was interested in knowing the message behind your ciphertext $$C = 8923478932 9873$$
       <br>
       So I first computed<br> $$2^{e}\:mod\:n = 2^{{e}}\:mod\:{{n}} =  2342 $$
@@ -209,14 +138,12 @@ function hide(){
       <br>
       $$ M =  2^{-1} \times Y \: mod \: n = 123124 \times 2342312 \: mod \: {{n}} = 1221312$$
       <br>
-      {{err_msg}}</p>
-      <div class="button-div">
-      <a href="/home " ">
-        <form action="" method="post">
-          <button onClick="hide_hack();" >Okay.</button>
-        </form>      
-      </a>
+      {{err_msg}}
 
+
+    </p>
+      <div class="button-div">
+          <button onClick="hide_hack();" >Okay.</button>
     </div>
   </div>
 
