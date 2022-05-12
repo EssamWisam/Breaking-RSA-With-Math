@@ -1,7 +1,7 @@
-from ipynb.fs.full.Library import GCD, ModInv, IsPrime, GenRandPrime, Encrypt, Decrypt, log, floor
+from ipynb.fs.full.Library import GCD, ModInv, IsPrime, GenRandPrime, Encrypt, Decrypt, log, floor, ConvertToStr, ConvertToInt
 
 def sign_up(p, q, e):
-   BITSNUM=512
+   BITSNUM=128
    if p == '':
       if e=='':
          if q == '':
@@ -89,24 +89,20 @@ def encrypt(n, e, M):
    if not isinstance(M, str):
       err_msg = 'M must be a string'
    
-   TruncationLen= floor(log(n ,256))
+   TruncationLen= floor(log(n ,256)) if floor(log(n ,256)) > 0 else 1
    M = list(M)
    M = [''.join(M[i:i+TruncationLen]) for i in range(0, len(M), TruncationLen)]
    C = [Encrypt(m, n, e) for m in M]
-   C = ''.join(C)
    return C, err_msg
 
 
 def decrypt(n, d, C):
    err_msg = ''
-   if C == '':
-      err_msg = 'Empty message'
-   if not isinstance(C, str):
-      err_msg = 'C must be a string'
-   
-   TruncationLen= floor(log(n ,256))
-   C = list(C)
-   C = [''.join(C[i:i+TruncationLen]) for i in range(0, len(C), TruncationLen)]
+   if not isinstance(C, list):
+      C=[C]
+   for c in C:
+      if c == '':
+         err_msg = 'Empty message'
    M = [Decrypt(c, n, d) for c in C]
    M = ''.join(M)
    return M, err_msg

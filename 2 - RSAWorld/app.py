@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect
-from library import sign_up, encrypt, decrypt
+from library import sign_up, encrypt, decrypt, ConvertToInt,ConvertToStr
 app = Flask(__name__)
 
 PU = (-1, -1)
@@ -45,13 +45,23 @@ def home_page():
         if  "encrypt" in request.form:
             M = request.form["plaintext"]
             enc_msg, err_msg = encrypt(PU[1], PU[0], M)
+            
+            for i in range(len(enc_msg)):
+                enc_msg[i]=str(ConvertToInt(enc_msg[i]))
+            enc_msg = '\n'.join(enc_msg)
+
             if err_msg == '':
-               return render_template('home.html', good_input=True, err_msg=err_msg, enc_input=True, dec_input=False, submitted=True, enc_msg = enc_msg, dec_msg = dec_msg)
+                return render_template('home.html', good_input=True, err_msg=err_msg, enc_input=True, dec_input=False, submitted=True, enc_msg = enc_msg, dec_msg = dec_msg)
             else:
                 return render_template('home.html', good_input=False, err_msg=err_msg, enc_input=True, dec_input=False, submitted=True)
         elif "decrypt" in request.form:
             C = request.form["ciphertext"]
-            dec_msg, err_msg = decrypt(PU[1], PR, C)
+
+            if not C.isdigit():
+                err_msg = 'C must be a number'
+            else:
+                C = ConvertToStr(int(C))
+                dec_msg, err_msg = decrypt(PU[1], PR, C)
 
             if err_msg == '':
                 return render_template('home.html', good_input=True, dec_input=True, enc_input=False, err_msg=err_msg, submitted=True, enc_msg = enc_msg, dec_msg = dec_msg)
