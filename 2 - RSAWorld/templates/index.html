@@ -56,11 +56,16 @@
     <div class="output">
       {% if good_input %}
         <p> Sign up successful.<br><br>
+          {% if check_long  %}
+          <span style = "color:yellow" >Note that some numbers were too long and were thus truncated</span>
+          <br>
+          <br>
+          {% endif %}
           We first compute $$ n = p\times q = {{p}}\times{{q}} = {{n}} $$
           <br>
           Now the public key is $$(n  , e \:) = ({{n}}  , {{e}} \:)$$
           <br>
-          We know $$ \phi(n) = (p-1)\times(q-1) = {{p-1}}\times{{q-1}} = {{phi_n}} $$
+          We know $$ \phi(n) = (p-1)\times(q-1) = {{p_minus1}}\times{{q_minus1}} = {{phi_n}} $$
           <br>
           Since $e = {{e}}$ and $gcd(e,\phi(n)) = 1$ we compute the secret key as    
           $$d = e^{-1} \: mod \: \phi(n) = {{e_inv}} \: mod \: {{phi_n}} = {{d}}$$ 
