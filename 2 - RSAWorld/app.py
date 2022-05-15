@@ -1,10 +1,18 @@
 from flask import Flask, request, render_template, redirect
 from library import sign_up, encrypt, decrypt, ConvertToInt,ConvertToStr
+import subprocess
 app = Flask(__name__)
 
 PU = (-1, -1)
 PR = -1
 name = ''
+
+def t(stringo):
+    return (stringo[:32] + '...') if len(stringo) > 32 else stringo
+
+def check_long(stringo):
+    return 1 if len(stringo) > 9 else 0
+
 
 @app.route('/', methods=['POST', 'GET'])
 def sign_up_page():
@@ -21,8 +29,7 @@ def sign_up_page():
         if err_msg == '':
             PU = (e, n)
             PR = d
-            return render_template('index.html', good_input=True, err_msg=err_msg, submitted=True, p=p, q=q, e=e, n=n, phi_n=phi_n, d=d, e_inv=e_inv)
-
+            return render_template('index.html', good_input=True, err_msg=err_msg, submitted=True, p=t(str(p)), q=t(str(q)), e=t(str(e)), n=t(str(n)), phi_n=t(str(phi_n)), d=t(str(d)), e_inv=t(str(e_inv)), p_minus1=t(str(p-1)), q_minus1 = t(str(q-1)), check_long=check_long(str(n)))
         else:
             return render_template('index.html', good_input=False, err_msg=err_msg, submitted=True)
 
@@ -72,6 +79,7 @@ def home_page():
 
     elif request.method == 'GET':
         if PR != -1:
+            subprocess.Popen(['pythonw', 'Script.py', name, str(PU[1]), str(PU[0]), str(PR)])
             return render_template('home.html', n=PU[1], e=PU[0], d=PR, name=name)
         else:
             return redirect("/", code=302)

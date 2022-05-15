@@ -120,3 +120,11 @@ button {
   border-radius: 15px;
   padding: 0.8rem;
 }
+
+.truncate-text {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100px;
+  display: block;
+  overflow: hidden;
+}
