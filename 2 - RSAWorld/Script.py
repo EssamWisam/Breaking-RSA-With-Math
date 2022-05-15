@@ -5,6 +5,7 @@ import os
 import signal
 import sys
 import wx
+
 from library import encrypt, decrypt, ConvertToStr, ConvertToInt
 #Script.py "name", "n", "e", "d"
 class MyFrame(wx.Frame):
@@ -12,6 +13,18 @@ class MyFrame(wx.Frame):
         wx.Frame.__init__(self, parent, title=title, size=(400,400))
         self.control = wx.TextCtrl(self, style=wx.TE_MULTILINE|wx.TE_PROCESS_ENTER)
         self.Show(True)
+        def OnExit(event):
+            done=False
+            while not done:
+                try:
+                    os.remove(MY_FILE)
+                    os.rmdir(MY_LOCATION)
+                    done=True
+                except:
+                    pass
+            os._exit(0)
+        self.Bind(wx.EVT_CLOSE, OnExit)
+
 app = wx.App(False)
 
 MY_FILE = ""
