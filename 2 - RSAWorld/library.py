@@ -6,7 +6,7 @@ def sign_up(p, q, e):
       if e=='':
          if q == '':
             p = str(GenRandPrime(BITSNUM))
-         else:
+         while p == q or p == '':
             p = str(GenRandPrime(int(log(int(q), 2)+1)))
       else:
          if int(e)%2 !=0:
@@ -14,7 +14,7 @@ def sign_up(p, q, e):
                p = str(GenRandPrime(BITSNUM))
                while GCD(int(p)-1, int(e)) != 1:
                   p = str(GenRandPrime(BITSNUM))
-            else:
+            while p == q or p == '':
                p = str(GenRandPrime(int(log(int(q), 2)+1)))
                while GCD(int(p)-1, int(e)) != 1:
                   p = str(GenRandPrime(int(log(int(q), 2)+1)))
@@ -23,7 +23,7 @@ def sign_up(p, q, e):
       if e=='':
          if p == '':
             q = str(GenRandPrime(BITSNUM))
-         else:
+         while p == q or q == '':
             q = str(GenRandPrime(int(log(int(p), 2)+1)))
       else:
          if int(e)%2 !=0:
@@ -31,7 +31,7 @@ def sign_up(p, q, e):
                q = str(GenRandPrime(BITSNUM))
                while GCD(int(q)-1, int(e)) != 1:
                   q = str(GenRandPrime(BITSNUM))
-            else:
+            while p == q or q == '':
                q = str(GenRandPrime(int(log(int(p), 2)+1)))
                while GCD(int(q)-1, int(e)) != 1:
                   q = str(GenRandPrime(int(log(int(p), 2)+1)))
@@ -92,6 +92,11 @@ def encrypt(n, e, M):
    TruncationLen= floor(log(n ,256)) if floor(log(n ,256)) > 0 else 1
    M = list(M)
    M = [''.join(M[i:i+TruncationLen]) for i in range(0, len(M), TruncationLen)]
+
+   for m in M:
+      if ConvertToInt(m) >=n :
+         err_msg = 'M must be less than n'
+
    C = [Encrypt(m, n, e) for m in M]
    return C, err_msg
 
