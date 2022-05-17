@@ -1,4 +1,4 @@
-from ipynb.fs.full.Library import GCD, ModInv, IsPrime, GenRandPrime, Encrypt, Decrypt, log, floor, ConvertToStr, ConvertToInt
+from ipynb.fs.full.Library import GCD, ModInv, IsPrime, GenRandPrime, Encrypt, Decrypt, log, floor, ConvertToStr, ConvertToInt, ModExp
 
 def sign_up(p, q, e):
    BITSNUM=128
