@@ -81,6 +81,9 @@ def Frame1_sending_routine_IO(_):
 		for item in enc_message:
 			print(str(ConvertToInt(item)))
 			file.write(str(ConvertToInt(item))+'\n')
+			file2=open(MY_FILE, "static\channel-in.txt")
+			file2.write(str(ConvertToInt(item))+'\n')
+			file2.close()
 		file.close()
 
 def select_user():
@@ -98,6 +101,7 @@ def select_user():
 		while OTHER=='':
 			pass
 		if OTHER == "r":
+			frame1.control.Clear()
 			OTHER=""
 			continue
 		OTHER_LOCATION = BASE+"/"+OTHER+"/"
