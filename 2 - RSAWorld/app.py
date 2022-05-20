@@ -47,7 +47,7 @@ def home_page():
     global PR
     global name
     if request.method == 'POST':
-        enc_msg, dec_msg = -1, ''
+        enc_msg, dec_msg = '', ''
         
         if  "encrypt" in request.form:
             M = request.form["plaintext"]
