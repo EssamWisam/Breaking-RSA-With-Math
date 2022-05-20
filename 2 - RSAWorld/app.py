@@ -11,7 +11,7 @@ def t(stringo):
     return (stringo[:32] + '...') if len(stringo) > 32 else stringo
 
 def check_long(stringo):
-    return 1 if len(stringo) > 9 else 0
+    return 1 if len(stringo) > 32 else 0
 
 
 @app.route('/', methods=['POST', 'GET'])
