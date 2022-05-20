@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect
-from library import sign_up, encrypt, decrypt, ConvertToInt,ConvertToStr
+from library import sign_up, encrypt, decrypt, Str2Num,Num2Str
 import subprocess
 app = Flask(__name__)
 
@@ -11,7 +11,7 @@ def t(stringo):
     return (stringo[:32] + '...') if len(stringo) > 32 else stringo
 
 def check_long(stringo):
-    return 1 if len(stringo) > 9 else 0
+    return 1 if len(stringo) > 32 else 0
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -54,7 +54,7 @@ def home_page():
             enc_msg, err_msg = encrypt(PU[1], PU[0], M)
             
             for i in range(len(enc_msg)):
-                enc_msg[i]=str(ConvertToInt(enc_msg[i]))
+                enc_msg[i]=str(Str2Num(enc_msg[i]))
             enc_msg = '\n'.join(enc_msg)
 
             if err_msg == '':
@@ -69,7 +69,7 @@ def home_page():
                     err_msg = 'C must be a number'
                     break
                 else:
-                    C = ConvertToStr(int(C))
+                    C = Num2Str(int(C))
                     dec_msg_temp, err_msg = decrypt(PU[1], PR, C)
                     dec_msg += dec_msg_temp
                     if err_msg != '':

@@ -1,5 +1,5 @@
 import pipes
-from ipynb.fs.full.Library import GCD, ModInv, IsPrime, GenRandPrime, Encrypt, Decrypt, log, floor, ConvertToStr, ConvertToInt, ModExp
+from ipynb.fs.full.Library import GCD, ModInv, IsPrime, GenRandPrime, Encrypt, Decrypt, log, floor, Num2Str, Str2Num, ModExp
 
 def sign_up(p, q, e):
    BITSNUM=128
@@ -82,8 +82,6 @@ def sign_up(p, q, e):
       if GCD(e, phi_n) != 1 and err_msg == '':
          err_msg = 'e is not coprime with φ(n)'
 
-      #?That is isn't reqired but it is a good idea to check it.
-      #TODO:Should we leave it?
       if p == q and err_msg == '':
          err_msg = 'p and q are the same that is a bad idea'
 
@@ -104,7 +102,7 @@ def encrypt(n, e, M):
    M = [''.join(M[i:i+TruncationLen]) for i in range(0, len(M), TruncationLen)]
 
    for m in M:
-      if ConvertToInt(m) >=n :
+      if Str2Num(m) >=n :
          err_msg = 'n is less than 256 and the input character is bigger than n'
 
    C = [Encrypt(m, n, e) for m in M]
