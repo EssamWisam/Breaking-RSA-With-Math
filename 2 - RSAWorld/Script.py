@@ -6,7 +6,7 @@ import signal
 import sys
 import wx
 
-from library import encrypt, decrypt, ConvertToStr, ConvertToInt
+from library import encrypt, decrypt, Num2Str, Str2Num
 #Script.py "name", "n", "e", "d"
 class MyFrame(wx.Frame):
     def __init__(self, parent, title):
@@ -79,10 +79,10 @@ def Frame1_sending_routine_IO(_):
 		enc_message = encrypt(other_n, other_e, message)[0]
 		#?---------------------
 		for item in enc_message:
-			print(str(ConvertToInt(item)))
-			file.write(str(ConvertToInt(item))+'\n')
+			print(str(Str2Num(item)))
+			file.write(str(Str2Num(item))+'\n')
 			file2=open(MY_FILE, "static\channel-in.txt")
-			file2.write(str(ConvertToInt(item))+'\n')
+			file2.write(str(Str2Num(item))+'\n')
 			file2.close()
 		file.close()
 
@@ -142,7 +142,7 @@ def reciving_routine():
             #?---------------------
 			#logic
             for item in data:
-                item = ConvertToStr(int(item))
+                item = Num2Str(int(item))
                 message = decrypt(user_n, user_d, item)[0]
                 frame1.control.AppendText(OTHER+": "+message+'\n')
             #? --------------------
