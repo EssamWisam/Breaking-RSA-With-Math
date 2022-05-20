@@ -47,7 +47,7 @@ def home_page():
     global PR
     global name
     if request.method == 'POST':
-        enc_msg, dec_msg = -1, -1
+        enc_msg, dec_msg = -1, ''
         
         if  "encrypt" in request.form:
             M = request.form["plaintext"]
@@ -63,12 +63,17 @@ def home_page():
                 return render_template('home.html', good_input=False, err_msg=err_msg, enc_input=True, dec_input=False, submitted=True)
         elif "decrypt" in request.form:
             C = request.form["ciphertext"]
-
-            if not C.isdigit():
-                err_msg = 'C must be a number'
-            else:
-                C = ConvertToStr(int(C))
-                dec_msg, err_msg = decrypt(PU[1], PR, C)
+            C_arr = C.split(' ')
+            for C in C_arr:
+                if not C.isdigit():
+                    err_msg = 'C must be a number'
+                    break
+                else:
+                    C = ConvertToStr(int(C))
+                    dec_msg_temp, err_msg = decrypt(PU[1], PR, C)
+                    dec_msg += dec_msg_temp
+                    if err_msg != '':
+                        break
 
             if err_msg == '':
                 return render_template('home.html', good_input=True, dec_input=True, enc_input=False, err_msg=err_msg, submitted=True, enc_msg = enc_msg, dec_msg = dec_msg)
