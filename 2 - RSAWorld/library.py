@@ -105,7 +105,7 @@ def encrypt(n, e, M):
 
    for m in M:
       if ConvertToInt(m) >=n :
-         err_msg = 'M must be less than n'
+         err_msg = 'n is less than 256 and the input character is bigger than n'
 
    C = [Encrypt(m, n, e) for m in M]
    return C, err_msg
