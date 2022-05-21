@@ -11,6 +11,20 @@ fetch('../static/channel-in.txt') // fetch text file
   console.log(cipher_text);
 });
 
+function Num2Str(num) {
+  var str = ""; //convert to binary
+
+  num = num.toString(2); //pad with zeros until length is a multiple of 8
+
+  num = num.padStart(8 * Math.ceil(num.length / 8), "0"); //convert every 8 bits to a character
+
+  for (var i = 0; i < num.length / 8; i++) {
+    str += String.fromCharCode(parseInt(num.substr(i * 8, 8), 2));
+  }
+
+  return str;
+}
+
 var modExp = function modExp(a, b, n) {
   a = a % n;
   var result = 1;
@@ -48,6 +62,7 @@ function set_cipher_text() {
   hack_text = cipher_text * two_e % n;
   d_hack_text = modExp(hack_text, d, n);
   hacked_msg = d_hack_text % 2 == 0 ? d_hack_text / 2 : (d_hack_text + n) / 2;
+  hacked_msg = Num2Str(hacked_msg);
   real_msg = modExp(cipher_text, d, n);
   elem.innerHTML = String(hack_text);
 }
