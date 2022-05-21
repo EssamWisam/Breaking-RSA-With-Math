@@ -104,6 +104,10 @@ def encrypt(n, e, M):
    for m in M:
       if Str2Num(m) >=n :
          err_msg = 'n is less than 256 and the input character is bigger than n'
+         break
+      if GCD(Str2Num(m),n) != 1:
+         err_msg = 'n is not coprime with the message'
+         break
 
    C = [Encrypt(m, n, e) for m in M]
    return C, err_msg
