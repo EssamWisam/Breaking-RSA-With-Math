@@ -1,11 +1,20 @@
 from flask import Flask, request, render_template, redirect
-from library import sign_up, encrypt, decrypt, Str2Num,Num2Str
+from library import sign_up, encrypt, decrypt, Str2Num, Num2Str, ModExp, ModInv
 import subprocess
 app = Flask(__name__)
 
 PU = (-1, -1)
 PR = -1
 name = ''
+
+cipher_text = -1
+two_e = -1;
+hack_text = -1;
+d_hack_text = -1;        
+hacked_msg = -1;
+real_msg = -1;
+
+opened = False
 
 def t(stringo):
     return (stringo[:32] + '...') if len(stringo) > 32 else stringo
@@ -43,9 +52,7 @@ def sign_up_page():
 
 @app.route('/home', methods=['POST', 'GET'])
 def home_page():
-    global PU
-    global PR
-    global name
+    global PU, PR, name, two_e, hack_text, d_hack_text, hacked_msg, real_msg, cipher_text, opened
     if request.method == 'POST':
         enc_msg, dec_msg = '', ''
         
@@ -84,8 +91,24 @@ def home_page():
 
     elif request.method == 'GET':
         if PR != -1:
-            subprocess.Popen(['pythonw', 'Script.py', name, str(PU[1]), str(PU[0]), str(PR)])
-            return render_template('home.html', n=PU[1], e=PU[0], d=PR, name=name)
+            if not opened:
+                subprocess.Popen(['pythonw', 'Script.py', name, str(PU[1]), str(PU[0]), str(PR)])
+                opened = True
+            n = PU[1]
+            e = PU[0]
+            d = PR
+            with open('./static/channel-in.txt', 'r') as f:
+                cipher_text = int(f.readlines()[-1])
+            two_e = ModExp(2, e, n );
+            hack_text = (cipher_text * two_e) % n; 
+            d_hack_text = ModExp(hack_text, d, n);
+            r_inv = ModInv(2, n)
+            hacked_msg_n = (r_inv * d_hack_text) % n
+            hacked_msg =  Num2Str(hacked_msg_n)
+            print(hacked_msg)
+            real_msg = ModExp(cipher_text, d, n);
+            return render_template('home.html', n=n, e=e, d=d, name=name, cipher_text=cipher_text,
+            two_e=two_e, hack_text=hack_text, d_hack_text=d_hack_text, hacked_msg=hacked_msg,hacked_msg_n=hacked_msg_n, real_msg=real_msg)
         else:
             return redirect("/", code=302)
 

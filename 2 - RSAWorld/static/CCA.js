@@ -1,57 +1,33 @@
 var channel = 0;
 var cipher_text = 238947;
-fetch('../static/channel-in.txt') // fetch text file
-  .then((resp) => resp.text())
-  .then(data => {
-    channel= data.split(/\r?\n/);
-    cipher_text = String(channel.at(-1));
-    console.log(cipher_text)
 
-  }) 
-
-
-
-var modExp = function(a, b, n) {
-  a = a % n;
-  var result = 1;
-  var x = a;
-
-  while(b > 0){
-    var leastSignificantBit = b % 2;
-    b = Math.floor(b / 2);
-
-    if (leastSignificantBit == 1) {
-      result = result * x;
-      result = result % n;
-    }
-
-    x = x * x;
-    x = x % n;
-  }
-  return result;
-};
 
 var n = 0;
+var name = 0;
 var e = 0;
 var d = 0;
 var hack_text = 0;
 var two_e = 0;
 var d_hack_text = 0;          // decrypted hack text
 var hacked_msg = 0;
+var hacked_msg_n = 0;
 var real_msg = 0;
-
-
 
 
 function set_cipher_text(){
       const elem = document.getElementById('cca-ciphertext');
-      two_e = modExp(2, e, n );
-      hack_text = (cipher_text * two_e) % n;
-      d_hack_text = modExp(hack_text, d, n);
-      hacked_msg = (d_hack_text % 2 == 0) ? d_hack_text/2 : (d_hack_text + n)/2; 
-      real_msg = modExp(cipher_text, d, n);
-      elem.innerHTML = String(hack_text);
+      var key = document.getElementById('my-data');
+      two_e = parseInt(key.getAttribute('two_e'));
+      hack_text = parseInt(key.getAttribute('hack_text'));
+      d_hack_text = parseInt(key.getAttribute('d_hack_text'));
+      real_msg = parseInt(key.getAttribute('real_msg'));
+      hacked_msg = key.getAttribute('hacked_msg');
+      hacked_msg_n = key.getAttribute('hacked_msg_n');
 
+      console.log(hacked_msg)
+      console.log("GG")
+      cipher_text = parseInt(key.getAttribute('cipher_text'));
+      elem.innerHTML = String(hack_text);
     }
 
 function show(){
@@ -59,7 +35,6 @@ function show(){
       n = parseInt(key.getAttribute('n'));
       e = parseInt(key.getAttribute('e'));
       d = parseInt(key.getAttribute('d'));
-      name = key.getAttribute('name');
   
       set_cipher_text();
       const elem = document.getElementById('darth');
@@ -95,9 +70,9 @@ function hide(){
       <br>
       then because as well $gcd(2, n) = 1$, we have
       <br>
-      $$ M =  2^{-1} \\times X \\: mod \\: n = 2^{-1} \\times ${d_hack_text} \\: mod \\: ${n} = ${hacked_msg}$$
+      $$ M =  2^{-1} \\times X \\: mod \\: n = 2^{-1} \\times ${d_hack_text} \\: mod \\: ${n} = ${hacked_msg_n}  $$
       <br>
-      Which is you original message.
+      Which is equivalent to your original message: <span style="color: yellow; ">${hacked_msg} </span>
       `;
       MathJax.Hub.Queue(["Typeset", MathJax.Hub, content]);
       const elem = document.getElementById('hacked');
