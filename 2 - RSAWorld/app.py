@@ -92,7 +92,7 @@ def home_page():
     elif request.method == 'GET':
         if PR != -1:
             if not opened:
-                subprocess.Popen(['pythonw', 'Script.py', name, str(PU[1]), str(PU[0]), str(PR)])
+                subprocess.Popen(['python', 'Script.py', name, str(PU[1]), str(PU[0]), str(PR)])
                 opened = True
             n = PU[1]
             e = PU[0]
@@ -115,5 +115,5 @@ def home_page():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=8000)
 

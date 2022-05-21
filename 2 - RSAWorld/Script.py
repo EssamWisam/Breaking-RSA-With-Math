@@ -81,9 +81,6 @@ def Frame1_sending_routine_IO(_):
 		for item in enc_message:
 			print(str(Str2Num(item)))
 			file.write(str(Str2Num(item))+'\n')
-			file2=open(MY_FILE, "static\channel-in.txt")
-			file2.write(str(Str2Num(item))+'\n')
-			file2.close()
 		file.close()
 
 def select_user():
