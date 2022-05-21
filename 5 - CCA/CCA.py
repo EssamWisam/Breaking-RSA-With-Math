@@ -1,3 +1,4 @@
+from locale import MON_1
 from ipynb.fs.full.Library import GCD, ModInv, ModExp, sign_up, Num2Str
 import json
 import os
@@ -42,10 +43,12 @@ for filename in glob.glob(os.path.join('./Input-Tests', '*.json')):
         msg, M, M_actual = CCA(p, q, e, C)
         with open('./Output-Tests/'+filename[-6:-5]+'.txt', encoding='utf-8', mode='w') as out_test_case:
          if msg=='':
-               M = Num2Str(M)
-               M_actual = Num2Str(M_actual)
-               out_test_case.write(f"Attack Successful, the M corresponding to C = {C} is M = {M}. \n")      
-               out_test_case.write(f"The vitctim has disclosed that indeed  M = {M} !! \n")      
+               M1 = Num2Str(M)
+               M_actual1 = Num2Str(M_actual)
+               out_test_case.write(f"Attack Successful, the M corresponding to C = {C} is M = {M1}. \n")      
+               out_test_case.write(f"The vitctim has disclosed that indeed  M = {M_actual1} !! \n")      
+               out_test_case.write(f"The numeric plaintext is: {M} = {M_actual}")      
+
          else:
                out_test_case.write(msg)
 
@@ -79,7 +82,7 @@ while True:
       M = Num2Str(M)
       M_actual = Num2Str(M_actual)
       print(f"Attack Successful, the M corresponding to C={C} is M = {M}. ")      
-      print(f"The vitctim has disclosed that indeed  M = {M} !! \n")      
+      print(f"The vitctim has disclosed that indeed  M = {M_actual} !! \n")      
 
    else:
       print(msg)

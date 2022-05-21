@@ -1,0 +1,3 @@
+Attack Successful, the M corresponding to C = 699925098444082 is M = Hello. 
+The vitctim has disclosed that indeed  M = Hello !! 
+The numeric plaintext is: 310939249775 = 310939249775
