@@ -92,8 +92,8 @@ def home_page():
     elif request.method == 'GET':
         if PR != -1:
             if not opened:
-                subprocess.Popen(['python', 'Script.py', name, str(PU[1]), str(PU[0]), str(PR)])
-                opened = True
+                subprocess.Popen(['pythonw', 'Script.py', name, str(PU[1]), str(PU[0]), str(PR)])
+                #opened = True
             n = PU[1]
             e = PU[0]
             d = PR
