@@ -64,6 +64,10 @@ def home_page():
                 enc_msg[i]=str(Str2Num(enc_msg[i]))
             enc_msg = '\n'.join(enc_msg)
 
+            file_object = open('static/channel-in.txt', 'a')
+            file_object.write(enc_msg + '\n')
+            file_object.close()
+
             if err_msg == '':
                 return render_template('home.html', good_input=True, err_msg=err_msg, enc_input=True, dec_input=False, submitted=True, enc_msg = enc_msg, dec_msg = dec_msg)
             else:
@@ -108,12 +112,10 @@ def home_page():
             print(hacked_msg)
             real_msg = ModExp(cipher_text, d, n);
             return render_template('home.html', n=n, e=e, d=d, name=name, cipher_text=cipher_text,
-            two_e=two_e, hack_text=hack_text, d_hack_text=d_hack_text, hacked_msg=hacked_msg,hacked_msg_n=hacked_msg_n, real_msg=real_msg)
+            two_e=two_e, hack_text=hack_text, hack_text_str=str(hack_text), d_hack_text=d_hack_text, hacked_msg=hacked_msg,hacked_msg_n=hacked_msg_n, real_msg=real_msg)
         else:
             return redirect("/", code=302)
 
 
-
 if __name__ == '__main__':
-    app.run(port=8000)
-
+    app.run(port=5000)

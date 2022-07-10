@@ -25,7 +25,7 @@ def sign_up(p, q, e):
                while GCD(int(p)-1, int(e)) != 1:
                   p = str(GenRandPrime(int(log(int(q), 2)+1)))
          else:
-            err_msg = 'e must be odd'
+            err_msg = ' e must be odd'
 
    if q == '':
       if e=='':
@@ -44,13 +44,13 @@ def sign_up(p, q, e):
                while GCD(int(q)-1, int(e)) != 1:
                   q = str(GenRandPrime(int(log(int(p), 2)+1)))
          else:
-            err_msg = 'e must be odd'
+            err_msg = ' e must be odd'
 
 
    if not p.isdigit() and err_msg == '':
-      err_msg = 'p must be a number'
+      err_msg = ' p must be a number'
    if not q.isdigit() and err_msg == '':
-      err_msg = 'q must be a number'
+      err_msg = ' q must be a number'
    
    if err_msg == '':
       p = int(p)
@@ -59,34 +59,35 @@ def sign_up(p, q, e):
       phi_n = (p - 1) * (q - 1)
 
       if not IsPrime(p) and err_msg == '':
-         err_msg = 'p is not prime'
+         err_msg = ' p is not prime'
       if not IsPrime(q) and err_msg == '':
-         err_msg = 'q is not prime'
+         err_msg = ' q is not prime'
       if p == 2 and err_msg == '':
-         err_msg = 'p must be greater than 2'
+         err_msg = ' p must be greater than 2'
       if q == 2 and err_msg == '':
-         err_msg = 'q must be greater than 2'
+         err_msg = ' q must be greater than 2'
          
       if e == '':
          e = str(GenRandPrime(int(log(phi_n,2))))
 
       if not e.isdigit() and err_msg == '':
-         err_msg = 'e must be a number'
+         err_msg = ' e must be a number'
       e = int(e)
       if e%2 == 0 and err_msg == '':
-         err_msg = 'e must be odd'
+         err_msg = ' e must be odd'
       if e <= 1  and err_msg == '':
-         err_msg = 'e should be greater than 1'
+         err_msg = ' e should be greater than 1'
       if e >= phi_n and err_msg == '':
-         err_msg = 'e should be less than φ(n)'
+         err_msg = ' e should be less than φ(n)'
       if GCD(e, phi_n) != 1 and err_msg == '':
-         err_msg = 'e is not coprime with φ(n)'
+         err_msg = ' e is not coprime with φ(n)'
 
       if p == q and err_msg == '':
-         err_msg = 'p and q are the same that is a bad idea'
+         err_msg = ' p and q are the same that is a bad idea'
 
       d = ModInv(e, phi_n)
       e_inv = d + n
+   if err_msg: err_msg = 'Could not proceed as ' + err_msg
    return p, q, e, e_inv, n, phi_n, d, err_msg
 
 
@@ -106,7 +107,7 @@ def encrypt(n, e, M):
          err_msg = 'n is less than 256 and the input character is bigger than n'
          break
       if GCD(Str2Num(m),n) != 1:
-         err_msg = 'n is not coprime with the message'
+         err_msg = 'n is not coprime with the message. consider a larger n or larger message'
          break
 
    C = [Encrypt(m, n, e) for m in M]
