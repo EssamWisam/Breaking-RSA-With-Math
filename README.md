@@ -18,3 +18,7 @@ In this project we:
 
 https://user-images.githubusercontent.com/49572294/169698540-88a0336a-bc36-46a1-a66e-3b607dcbaf1a.mp4
 
+## Collaborators
+
+<!-- readme: collaborators -start -->
+<!-- readme: collaborators -end -->
