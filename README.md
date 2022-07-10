@@ -13,7 +13,7 @@ flask run
 ![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white)
 
 
-## Features 📚
+## Features ⛺
 
 ✦ Fully implemented RSA algorithm (Key Generation and Validation, Encryption and Decryption)
 
