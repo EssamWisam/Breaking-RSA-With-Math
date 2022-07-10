@@ -21,7 +21,7 @@ flask run
 
 ✦ Multi-party end-to-end encrypted chat through RSA
 
-// Does not wotk on Mac xD.
+<img width="1312" alt="image" src="/2 - RSAWorld/Test Cases/chat.gif">
 
 ✦ Comes with analysis on encryption time and mathetmatical brute-force attacks
 
