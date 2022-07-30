@@ -17,15 +17,15 @@ flask run
 
 ✦ Fully implemented RSA algorithm (Key Generation and Validation, Encryption and Decryption)
 
-<img width="1312" alt="image" src="/2 - RSAWorld/Test Cases/Gif.gif">
+<img width="100%" alt="image" src="/2 - RSAWorld/Test Cases/Gif.gif">
 
 ✦ Multi-party end-to-end encrypted chat through RSA
 
-<img width="1312" alt="image" src="/2 - RSAWorld/Test Cases/chat.gif">
+<img width="100%" alt="image" src="/2 - RSAWorld/Test Cases/chat.gif">
 
 ✦ Comes with analysis on encryption time and mathetmatical brute-force attacks
 
-<img width="1312" alt="image" src="https://user-images.githubusercontent.com/49572294/169697689-1341949c-85d6-4123-92f0-0b1c6d4f8632.png">
+<img width="100%" alt="image" src="https://user-images.githubusercontent.com/49572294/169697689-1341949c-85d6-4123-92f0-0b1c6d4f8632.png">
 
 Check the CS Project.pdf for more.
 
